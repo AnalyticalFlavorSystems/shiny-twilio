@@ -35,11 +35,14 @@ shinyServer(function(input, output) {
                         ftpUpload(f, paste0("ftp://<your-ftp-server-name->",filename))
 
                         ## Twilio RCurl Rest Call 
-                        POST('https://api.twilio.com/2010-04-01/Accounts/<Your-Twilio-account-id>/Calls.json',
+                        response <- POST('https://api.twilio.com/2010-04-01/Accounts/<Your-Twilio-account-id>/Calls.json',
                              body = list(Url=paste0("https://<your-ftp-server-name>",filename),
                                          From='+<Your-twilio-phone-number>',To=paste0("+1",isolate(input$phone_number))),
                              config=authenticate("<Your-Twilio-account-id>",
                                                  "<Your-Twilio-account-auth-token>",type="basic"))
+
+                        ## This will print response for testing purposes.
+                        # print(response)
                     }
                 }
             })
